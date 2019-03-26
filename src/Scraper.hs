@@ -21,7 +21,9 @@ cartoonScrapper :: Scraper String Cartoon
 cartoonScrapper = do
   cartoonName <- attr "title" "img"
   newEpisode  <- text $ "span" @: [hasClass "textWhite"]
-  return $ Cartoon cartoonName (trim newEpisode)
+  urlEpisode  <- chroot ("div" @: [hasClass "info"]) $
+                    attr "href" "a"
+  return $ Cartoon cartoonName (trim newEpisode) urlEpisode
 
 -- | Helpers
 
